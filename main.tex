@@ -6,15 +6,15 @@
 
 % NOTE: Leer nota en el README sobre la font.
 
-\newcommand{\titulo}{Título de la memoria}
-\newcommand{\ciudad}{Ciudad} % e.g. Valparaíso
+\newcommand{\titulo}{Diseño de una guía de buenas prácticas para la generación de propuestas técnicas en una empresa de proyectos de ingeniería, utilizando técnicas de análisis de textos}
+\newcommand{\ciudad}{Valparaíso} % e.g. Valparaíso
 % TODO: Consultar el formato de los nombres:
-\newcommand{\nombrealumno}{Nombre del alumno}
-\newcommand{\nombreprofesor}{Nombre del profesor guía}
-\newcommand{\nombrecorreferente}{Nombre del correferente}
+\newcommand{\nombrealumno}{Lukas Zamora Jabre}
+\newcommand{\nombreprofesor}{José Luis Martí L.}
+\newcommand{\nombrecorreferente}{Cecilia Reyes C.}
 % Mes y año del examen
-\newcommand{\mesexamen}{Diciembre}
-\newcommand{\anioexamen}{20XX}
+\newcommand{\mesexamen}{Octubre}
+\newcommand{\anioexamen}{2019}
 % Dedicatoria y agradecimientos
 \newcommand{\dedicatoria}{
 Considerando lo importancia de este trabajo para los alumnos, este apartado es para que el autor entregue palabras personales para dedicar este documento. La extensión puede ser de máximo una hoja y se deben mantener este formato, tipo y tamaño de letra.
@@ -23,21 +23,23 @@ Considerando lo importancia de este trabajo para los alumnos, este apartado es p
 Considerando la importancia de este trabajo para los alumnos, este apartado se podrá incluir en el caso de que el autor desee agradecer a las personas que facilitaron alguna ayuda relevante en su trabajo para la realización de este documento. La extensión puede ser de máximo una hoja y se deben mantener este formato, tipo y tamaño de letra.
 }
 \newcommand{\resumen}{
-El resumen y las palabras clave no deben superar la mitad de la página, donde debe precisarse brevemente: 1) lo que el autor ha hecho, 2) cómo lo hizo (sólo si es importante detallarlo), 3) los resultados principales, 4) la relevancia de los resultados. El resumen es una representación abreviada, pero comprensiva de la memoria y debe informar sobre el objetivo, la metodología y los resultados del trabajo realizado.
+El presente documento tiene como objetivo detallar el trabajo realizado para analizar y validar el uso de técnicas de análisis de textos en documentos técnicos de una empresa de proyectos de ingeniería. Para ello se analizó un conjunto de propuestas técnicas, con el objetivo de generar directrices a la hora de producir un nuevo documento. Una vez finalizados los análisis, estos fueron validados junto a un experto en el dominio quien aprobó algunas de las conclusiones encontradas en este trabajo e incluso halló otros usos a ciertas herramientas estudiadas. Si bien, las directrices generadas no son de gran calidad debido al bajo número de documentos analizados, si se demostró que efectivamente este tipo de documentos es apto para ser analizado utilizando este tipo de técnicas y que incluso puede ser más eficaz que los métodos tradicionales que hoy en día se usan dentro de la compañía en estudio. 
 }
 \newcommand{\resumeningles}{
 Corresponde a la traducción al idioma inglés del Resumen anterior. Sujeto a la misma regla de extensión del Resumen.
 }
 \newcommand{\palabrasclave}{
-Cinco es el máximo de palabras clave para describir los temas tratados en la memoria, ponerlas separadas por punto y comas.
+Análisis de textos; Minería de Textos; Procesamiento de lenguaje natural; Hatch
 }
 \newcommand{\palabrasclaveingles}{
-Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
+Text analysis; Text mining; Natural language processing; Hatch
 }
 % @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>
 
 % Paquete para importar imágenes
 \usepackage{graphicx}
+\usepackage{multirow}
+
 % Directorio de las imágenes
 \graphicspath{ {figures/} }
 
@@ -64,10 +66,17 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 % Paquete para definir los formatos de los títulos
 \usepackage[explicit]{titlesec}
 
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 \titleformat{name=\section}[block]{\fontsize{16}{24}\selectfont\bfseries}{}{0pt}{#1}
 \titleformat{name=\section,numberless}[block]{\fontsize{16}{24}\selectfont\bfseries}{}{0pt}{#1}
+
+
 \titlespacing*{name=\section}{0pt}{0pt}{0.5cm}
 \titlespacing*{name=\section,numberless}{0pt}{0pt}{0.5cm}
+
+
+
 
 % Separación entre parrafos
 \setlength{\parskip}{0.4cm}
@@ -85,6 +94,31 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 
 % Para obtener el número de la última página
 \usepackage{lastpage}
+
+% Estilo de los códigos
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 % Header y footer
 \usepackage{fancyhdr}
@@ -150,6 +184,7 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 % Personalizar Tabla de Contenidos
 
 \usepackage{tocloft}
+\usepackage[table,xcdraw,listings]{xcolor}
 \renewcommand{\cftsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
 \renewcommand{\cftsubsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
 \renewcommand{\cftsubsubsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
@@ -203,11 +238,11 @@ Corresponde a la traducción al idioma inglés de Palabras Clave anteriores.
 \input{conclusiones}
 
 \newpage
-\input{anexos}
-
-\newpage
 % Bibliografía estilo APA:
 \bibliographystyle{apalike-es}
 \bibliography{bibliografia}{}
+
+\newpage
+\input{anexos}
 
 \end{document}
